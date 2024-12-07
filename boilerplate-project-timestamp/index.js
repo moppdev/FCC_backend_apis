@@ -29,14 +29,17 @@ app.get("/api/:date?", (req, res) => {
   // Get parameter
   let dateParam = req.params.date;
 
+  console.log(typeof(dateParam));
+
   // Check if param is empty or null
-  (dateParam == null || dateParam == "") ? dateParam = "" : 0;
+  (dateParam == null || dateParam == undefined || dateParam == "") ? dateParam = "" : 0;
   
   // If param is empty/null, return current date
   if (dateParam == "")
   {
-    const nowDate = new Date();
-    res.json({unix: parseInt(Date.UTC(nowDate.getUTCFullYear(), nowDate.getUTCMonth(), nowDate.getUTCDate())), utc: nowDate.toUTCString()});
+    let date = new Date();
+    res.json({unix: new Number(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 
+      date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())), utc: date.toUTCString()});
   }
   else
   {
@@ -49,7 +52,8 @@ app.get("/api/:date?", (req, res) => {
     {
       dateParam = new Number(dateParam);
       let date = new Date(dateParam);
-      res.json({unix: Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()), utc: date.toUTCString()});
+      res.json({unix: new Number(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 
+        date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())), utc: date.toUTCString()});
     }
     else
     {
@@ -57,7 +61,8 @@ app.get("/api/:date?", (req, res) => {
       if (new Date(dateParam) != "Invalid Date")
       {
           let date = new Date(dateParam);
-          res.json({unix: Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()), utc: date.toUTCString()});
+          res.json({unix: new Number(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 
+            date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())), utc: date.toUTCString()});
       }
       else
       {
