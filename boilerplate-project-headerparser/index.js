@@ -3,8 +3,8 @@
 
 // init project
 require('dotenv').config();
-var express = require('express');
-var app = express();
+let express = require('express');
+let app = express();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC
@@ -19,9 +19,11 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+// Route that returns a user's ip, language and browser software
+app.get("/api/whoami", (req, res) => {
+  // Get the ip from the req object. Get the language and software from req.headers
+  // Return them in JSON
+  res.json({ipaddress: req.ip, language: req.headers["accept-language"],  software: req.headers["user-agent"]});
 });
 
 // listen for requests :)
